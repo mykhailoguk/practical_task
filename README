@@ -1,0 +1,12 @@
+Simple web service returns  content of terraform state file. 
+ 
+
+
+Build steps:
+1. docker build -t flask_app:latest ./app/
+2. docker build -t nginx:latest ./nginx/
+3. docker-compose up
+
+Test steps:
+1. ./test/install_siego.sh 
+2. ./test/test_by_siege.sh <number_of_request> 

@@ -1,0 +1,14 @@
+version: '3'
+services:
+    reverseproxy:
+        image: nginx:latest
+        ports:
+            - 8080:80
+        restart: always
+        volumes:
+            - ./nginx:/etc/nginx 
+        links:
+            - flask_app:flask_app
+    flask_app:
+        image: flask_app:latest
+        restart: always
