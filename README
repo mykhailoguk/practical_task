@@ -1,6 +1,17 @@
-Simple web service returns  content of terraform state file. 
- 
 
+Simple web service returns  content of terraform state file. 
+To run service, firstly build docker image from Dockerfile (step 1). Nexy, you will need to run container with service. 
+Service is running in docker container without port exposing so it is reacble only inside container.
+To access service outside container - run nginx server (firtsly build image step 2), which proxying request from client to our service.
+Therefore, you will be able reach service trough exposed 8080 nginx port. (run containers with docker-compose step 3)
+curl http://127.0.0.1:8080/no_limit/uploads/terraform.json - send request through proxy "/no_limit/", which redirects it to http://flask_app:5000/uploads/terraform.json
+You an find configs in /etc/nginx/mginx.conf
+
+Rate limiting is also implemented for service. You can run tests to validate this. (step 1,2)
+For strees test I used Siege, which is an open source regression test and benchmark utility. It can stress test a single URL with a user defined number of simulated users, or it can read many URLs into memory and stress them simultaneously. The program reports the total number of hits recorded, bytes transferred, response time, concurrency, and return status.
+
+You will need to isntall it with step 1.
+"burst" is set to 5, which means NGINX to apply a maximum rate of 5r/s
 
 Build steps:
 1. docker build -t flask_app:latest ./app/
@@ -9,4 +20,4 @@ Build steps:
 
 Test steps:
 1. ./test/install_siego.sh 
-2. ./test/test_by_siege.sh <number_of_request> 
+2. ./test/test_by_siege.sh <number_of_request> //start with 10 or more
