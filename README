@@ -2,11 +2,11 @@
 
 Simple web service returns  content of terraform state file.
 
-To run service, firstly build docker image from Dockerfile (step 1). Nexy, you will need to run container with service. 
+To run service, firstly build docker image from Dockerfile (step 1). Next, you will need to run container with service. 
 Service is running in docker container without port exposing so it is reacble only inside container.
 To access service outside container - run nginx server (firtsly build image step 2), which proxying request from client to our service.
 
-Therefore, you will be able reach service trough exposed 8080 nginx port. (run containers with docker-compose step 3)
+Therefore, you will be able to reach service trough exposed 8080 nginx port. (run containers with docker-compose step 3)
 curl http://127.0.0.1:8080/no_limit/uploads/terraform.json - send request through proxy "/no_limit/", which redirects it to http://flask_app:5000/uploads/terraform.json
 You an find configs in /etc/nginx/mginx.conf
 
